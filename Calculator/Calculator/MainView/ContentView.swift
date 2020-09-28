@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var currentValue: String = "0"
+    @State var remmeberedValue: Double?
+    @State var logicMode: SpecialButtonType? = nil
+    @State var remeberedState: SpecialButtonType? = nil
+        
     var body: some View {
         VStack {
-    
             
-            Label("0", image: "")
+            Label("\(currentValue)", image: "")
                 .frame(width: 260, height: 45, alignment: .trailing)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10.0))
                 .background(Color.secondary)
@@ -23,33 +27,44 @@ struct ContentView: View {
             Spacer()
             
             HStack {
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 1))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 2))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 3))
+                createNumberButton(countValue: 1)
+                createNumberButton(countValue: 2)
+                createNumberButton(countValue: 3)
             }
             HStack {
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 4))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 5))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 6))
+                createNumberButton(countValue: 4)
+                createNumberButton(countValue: 5)
+                createNumberButton(countValue: 6)
             }
             HStack {
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 7))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 8))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 9))
+                createNumberButton(countValue: 7)
+                createNumberButton(countValue: 8)
+                createNumberButton(countValue: 9)
             }
             HStack {
-                SpecialButtonView(specialButtonModel: SpecialButtonModel(specialButtonType: .addition))
-                NumberButtonView(buttonModel: NumberButtonModel(countValue: 0))
-                SpecialButtonView(specialButtonModel: SpecialButtonModel(specialButtonType: .substraction))
+                createSpecialButton(specialButtonModel: .addition)
+                createNumberButton(countValue: 0)
+                createSpecialButton(specialButtonModel: .substraction)
             }
             HStack {
-                SpecialButtonView(specialButtonModel: SpecialButtonModel(specialButtonType: .division))
-                SpecialButtonView(specialButtonModel: SpecialButtonModel(specialButtonType: .equal))
-                SpecialButtonView(specialButtonModel: SpecialButtonModel(specialButtonType: .multiplication))
+                createSpecialButton(specialButtonModel: .multiplication)
+                createSpecialButton(specialButtonModel: .equal)
+                createSpecialButton(specialButtonModel: .division)
             }
             
             Spacer()
         }
+    }
+}
+
+
+extension ContentView {
+    func createNumberButton(countValue: Int) -> some View {
+        return NumberButtonView(buttonModel: NumberButtonModel(countValue: countValue), currentValue: $currentValue)
+    }
+    
+    func createSpecialButton(specialButtonModel: SpecialButtonType) -> some View {
+        return SpecialButtonView(specialButtonModel: specialButtonModel, changedState: $logicMode, currentValue: $currentValue, rememberedValue: $remmeberedValue, rememmberedState: $remeberedState)
     }
 }
 

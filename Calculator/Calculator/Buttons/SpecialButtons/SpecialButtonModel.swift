@@ -26,12 +26,3 @@ enum SpecialButtonType: Int {
         }
     }
 }
-
-class SpecialButtonModel: ObservableObject {
-    let specialButtonType: SpecialButtonType
-    @Published var buttonPressed = false
-    
-    init(specialButtonType: SpecialButtonType) {
-        self.specialButtonType = specialButtonType
-    }
-}
